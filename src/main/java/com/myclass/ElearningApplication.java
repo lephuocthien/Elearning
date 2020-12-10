@@ -1,4 +1,4 @@
-package com.myclass.main;
+package com.myclass;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
