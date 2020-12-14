@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<th:block th:replace="user/fragments/styles" />
+</head>
+
+<body>
+
+	<header class="container-fluid border-bottom">
+		<div th:replace="user/fragments/navbar :: navbar"></div>
+	</header>
+	<!-- CONTENT -->
+	<section layout:fragment="content"></section>
+
+	<footer class="py-4 mt-4 text-center border-top">
+		<span>Copyright © 2019 Cybersoft, Inc.</span>
+	</footer>
+	
+	<th:block th:replace="user/fragments/scripts" />
+</body>
+
+</html>
