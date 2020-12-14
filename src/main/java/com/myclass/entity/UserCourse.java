@@ -7,10 +7,13 @@ package com.myclass.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,28 +21,66 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "user_courses")
 public class UserCourse {
-	@Id
-	@Column(name = "user_id")
-	private int userId;
-
-	@Id
-	@Column(name = "course_id")
-	private int courseId;
-
-	@Column(name = "role_id")
-	private int roleId;
-
+	
+	@EmbeddedId
+	private UserCourseId userCourseId;
+	
 	// Quan hệ nhiều - 1 với User
 	@ManyToOne(cascade = CascadeType.ALL)
 	// Chỉ tên khoá ngoại là user_id
-	@JoinColumn(name = "user_id", insertable = false, updatable = false)
+	@MapsId("userId")
 	@JsonIgnore
 	private User user;
 
 	// Quan hệ nhiều - 1 với Course
 	@ManyToOne(cascade = CascadeType.ALL)
 	// Chỉ tên khoá ngoại là course_id
-	@JoinColumn(name = "course_id", insertable = false, updatable = false)
+	@MapsId("courseId")
 	@JsonIgnore
 	private Course course;
+
+	@Column(name = "role_id")
+	private int roleId;
+	/**
+	 * 
+	 */
+	public UserCourse() {
+		super();
+	}
+	/**
+	 * @param userCourseId
+	 * @param roleId
+	 */
+	public UserCourse(UserCourseId userCourseId, int roleId) {
+		super();
+		this.userCourseId = userCourseId;
+		this.roleId = roleId;
+	}
+	/**
+	 * @return the userCourseId
+	 */
+	public UserCourseId getUserCourseId() {
+		return userCourseId;
+	}
+	/**
+	 * @param userCourseId the userCourseId to set
+	 */
+	public void setUserCourseId(UserCourseId userCourseId) {
+		this.userCourseId = userCourseId;
+	}
+	/**
+	 * @return the roleId
+	 */
+	public int getRoleId() {
+		return roleId;
+	}
+	/**
+	 * @param roleId the roleId to set
+	 */
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+	
+	
+	
 }

@@ -5,6 +5,7 @@
  */
 package com.myclass.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "users")
 
-public class User {
+public class User implements Serializable{
 	@Id //Cột khoá chính
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Tăng tự động
 	@Column(name = "id")
