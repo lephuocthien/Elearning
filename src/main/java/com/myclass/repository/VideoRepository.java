@@ -5,6 +5,10 @@
  */
 package com.myclass.repository;
 
-public interface VideoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.myclass.entity.Video;
+
+public interface VideoRepository extends JpaRepository<Video, Integer>{
 
 }

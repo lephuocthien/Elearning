@@ -5,6 +5,10 @@
  */
 package com.myclass.repository;
 
-public interface CourseRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.myclass.entity.Course;
+
+public interface CourseRepository extends JpaRepository<Course, Integer>{
 
 }

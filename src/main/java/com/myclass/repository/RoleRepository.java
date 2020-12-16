@@ -5,6 +5,10 @@
  */
 package com.myclass.repository;
 
-public interface RoleRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.myclass.entity.Role;
+
+public interface RoleRepository extends JpaRepository<Role, Integer> {
 
 }
