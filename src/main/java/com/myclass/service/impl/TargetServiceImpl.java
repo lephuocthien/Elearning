@@ -5,43 +5,77 @@
  */
 package com.myclass.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import com.myclass.dto.TargetDto;
+import com.myclass.entity.Target;
+import com.myclass.repository.TargetRepository;
 import com.myclass.service.TargetService;
 
 @Service
-public class TargetServiceImpl implements TargetService{
+public class TargetServiceImpl implements TargetService {
+
+	private TargetRepository targetRepository;
+
+	/**
+	 * @param targetRepository
+	 */
+	public TargetServiceImpl(TargetRepository targetRepository) {
+		super();
+		this.targetRepository = targetRepository;
+	}
 
 	@Override
 	public List<TargetDto> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Target> targets = targetRepository.findAll();
+		List<TargetDto> dtos = new ArrayList<TargetDto>();
+		for (Target target : targets) {
+			TargetDto dto = new TargetDto();
+			dto.setId(target.getId());
+			dto.setTitle(target.getTitle());
+			dto.setCourseId(target.getCourseId());
+			dtos.add(dto);
+		}
+		return dtos;
 	}
 
 	@Override
 	public TargetDto getById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Target target = targetRepository.findById(id).get();
+		TargetDto dto = new TargetDto();
+		dto.setId(target.getId());
+		dto.setTitle(target.getTitle());
+		dto.setCourseId(target.getCourseId());
+		return dto;
 	}
 
 	@Override
 	public void save(TargetDto dto) {
-		// TODO Auto-generated method stub
-		
+		Target target = new Target();
+		target.setId(dto.getId());
+		target.setTitle(dto.getTitle());
+		target.setCourseId(dto.getCourseId());
+		targetRepository.save(target);
+
 	}
 
 	@Override
 	public void edit(TargetDto dto) {
-		// TODO Auto-generated method stub
-		
+		Target target = targetRepository.findById(dto.getId()).get();
+		if(target!=null) {
+			target.setTitle(dto.getTitle());
+			target.setCourseId(dto.getCourseId());
+			targetRepository.save(target);
+		}
+
 	}
 
 	@Override
 	public void remove(int id) {
-		// TODO Auto-generated method stub
-		
+		targetRepository.deleteById(id);
+
 	}
 
 }
