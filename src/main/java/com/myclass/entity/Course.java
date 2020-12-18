@@ -78,12 +78,12 @@ public class Course implements Serializable{
 	private List<UserCourse> userCourses;
 
 	// Quan hệ 1 - nhiều với Target
-	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-	private List<Target> targets;
+//	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+//	private List<Target> targets;
 
 	// Quan hệ 1 - nhiều với Video
-	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-	private List<Video> videos;
+//	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+//	private List<Video> videos;
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id", insertable = false, updatable = false)
@@ -311,6 +311,62 @@ public class Course implements Serializable{
 	 */
 	public void setLastUpdate(Timestamp lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+
+	/**
+	 * @return the userCourses
+	 */
+	public List<UserCourse> getUserCourses() {
+		return userCourses;
+	}
+
+	/**
+	 * @param userCourses the userCourses to set
+	 */
+	public void setUserCourses(List<UserCourse> userCourses) {
+		this.userCourses = userCourses;
+	}
+
+//	/**
+//	 * @return the targets
+//	 */
+//	public List<Target> getTargets() {
+//		return targets;
+//	}
+//
+//	/**
+//	 * @param targets the targets to set
+//	 */
+//	public void setTargets(List<Target> targets) {
+//		this.targets = targets;
+//	}
+//
+//	/**
+//	 * @return the videos
+//	 */
+//	public List<Video> getVideos() {
+//		return videos;
+//	}
+//
+//	/**
+//	 * @param videos the videos to set
+//	 */
+//	public void setVideos(List<Video> videos) {
+//		this.videos = videos;
+//	}
+
+	/**
+	 * @return the category
+	 */
+	public Category getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	
 	

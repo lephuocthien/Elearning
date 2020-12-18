@@ -209,6 +209,34 @@ public class User implements Serializable{
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
+
+	/**
+	 * @return the role
+	 */
+	public Role getRole() {
+		return role;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	/**
+	 * @return the userCourses
+	 */
+	public List<UserCourse> getUserCourses() {
+		return userCourses;
+	}
+
+	/**
+	 * @param userCourses the userCourses to set
+	 */
+	public void setUserCourses(List<UserCourse> userCourses) {
+		this.userCourses = userCourses;
+	}
 	
 	
 	
