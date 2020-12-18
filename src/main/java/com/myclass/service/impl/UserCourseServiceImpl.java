@@ -24,7 +24,7 @@ public class UserCourseServiceImpl implements UserCourseService {
 	public UserCourseServiceImpl(UserCourseRepository userCourseRepository) {
 		this.userCourseRepository = userCourseRepository;
 	}
-	
+	@Override
 	public List<UserCourseDto> getAll(){
 		List<UserCourse> userCourses = userCourseRepository.findAll();
 		List<UserCourseDto> dtos = new ArrayList<UserCourseDto>();
@@ -38,6 +38,7 @@ public class UserCourseServiceImpl implements UserCourseService {
 		return dtos;
 	}
 	
+	@Override
 	public void save(UserCourseDto dto) {
 //		userCourse.getCourse().getUserCourses().add(userCourse);
 //		userCourse.getUser().getUserCourses().add(userCourse);
