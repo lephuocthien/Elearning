@@ -1,6 +1,6 @@
 /**
- * Dec 19, 2020
- * 11:13:14 PM
+ * Dec 21, 2020
+ * 5:08:31 PM
  * @author LeThien
  */
 package com.myclass.api;
@@ -18,29 +18,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myclass.dto.RoleDto;
-import com.myclass.service.RoleService;
+import com.myclass.dto.CourseDto;
+import com.myclass.service.CourseService;
 
 @RestController
-@RequestMapping("api/role")
-public class ApiRoleController {
-	private RoleService roleService;
+@RequestMapping("api/course")
+public class ApiCourseController {
+	private CourseService courseService;
 
 	/**
-	 * @param roleService
+	 * @param courseService
 	 */
-	public ApiRoleController(RoleService roleService) {
+	public ApiCourseController(CourseService courseService) {
 		super();
-		this.roleService = roleService;
+		this.courseService = courseService;
 	}
 
-	// Tìm tất cả
+	// Tìm all
 	@GetMapping("")
 	public ResponseEntity<Object> getAll() {
 		try {
-			List<RoleDto> dtos = roleService.getAll();
+			List<CourseDto> dtos = courseService.getAll();
 			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
-		} catch (Exception e) {
+		} catch (Exception ex) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -49,45 +49,46 @@ public class ApiRoleController {
 	@GetMapping("get/{id}")
 	public ResponseEntity<Object> getById(@PathVariable("id") int id) {
 		try {
-			RoleDto dto = roleService.getById(id);
+			CourseDto dto = courseService.getById(id);
 			return new ResponseEntity<Object>(dto, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<Object>("Sai ID", HttpStatus.BAD_REQUEST);
+		} catch (Exception ex) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	// Thêm mới
 	@PostMapping("add")
-	public ResponseEntity<Object> add(@RequestBody RoleDto dto) {
+	public ResponseEntity<Object> add(@RequestBody CourseDto dto) {
 		try {
-			roleService.save(dto);
+			courseService.save(dto);
 			return new ResponseEntity<Object>("Thêm thành công!", HttpStatus.CREATED);
 		} catch (Exception ex) {
-			return new ResponseEntity<Object>("Thêm thất bại!", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	// Cập nhật
 	@PutMapping("update/{id}")
-	public ResponseEntity<Object> edit(@PathVariable("id") int id, @RequestBody RoleDto dto) {
+	public ResponseEntity<Object> edit(@PathVariable("id") int id, @RequestBody CourseDto dto) {
 		try {
-			if (roleService.getById(id) == null)
+			if (courseService.getById(id) == null)
 				return new ResponseEntity<Object>("Id " + id + " không tồn tại", HttpStatus.CREATED);
-			roleService.edit(dto);
-			return new ResponseEntity<Object>("Cập nhật thành công!", HttpStatus.OK);
+			courseService.edit(dto);
+			return new ResponseEntity<Object>("Cập nhật thành công!", HttpStatus.CREATED);
 		} catch (Exception ex) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	// Xoá
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("delete/{id}")
 	public ResponseEntity<Object> remove(@PathVariable("id") int id) {
 		try {
-			roleService.remove(id);
+			courseService.remove(id);
 			return new ResponseEntity<Object>("Xoá thành công", HttpStatus.OK);
 		} catch (Exception ex) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 	}
+
 }

@@ -8,6 +8,7 @@ package com.myclass.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -71,19 +72,11 @@ public class Course implements Serializable{
 	private int categoryId;
 
 	@Column(name = "last_update")
-	private Timestamp lastUpdate;
+	private Date lastUpdate;
 
 	// Quan hệ 1 - nhiều với UserCourse
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
 	private List<UserCourse> userCourses;
-
-	// Quan hệ 1 - nhiều với Target
-//	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-//	private List<Target> targets;
-
-	// Quan hệ 1 - nhiều với Video
-//	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-//	private List<Video> videos;
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id", insertable = false, updatable = false)
@@ -302,14 +295,14 @@ public class Course implements Serializable{
 	/**
 	 * @return the lastUpdate
 	 */
-	public Timestamp getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
 	/**
 	 * @param lastUpdate the lastUpdate to set
 	 */
-	public void setLastUpdate(Timestamp lastUpdate) {
+	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

@@ -8,6 +8,8 @@ package com.myclass.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.myclass.dto.UserDto;
@@ -31,7 +33,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserDto> getAll() {
 		List<User> users = userRepository.findAll();
-		System.out.println("ABC");
 		List<UserDto> dtos = new ArrayList<UserDto>();
 		for (User user : users) {
 			UserDto dto = new UserDto();
@@ -98,5 +99,25 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		userRepository.deleteById(id);
 	}
+	
+	@Override
+	public Page<User> getUserPaging(int pageIndex, int pageSize) {
+		// TODO: get user paging
+		PageRequest paging = PageRequest.of(pageIndex, pageSize);
+		
+		return userRepository.findAll(paging);
+	}
 
+	@Override
+	public Page<UserDto> getUserRolePaging(int pageIndex, int pageSize) {
+		// TODO:
+		PageRequest paging = PageRequest.of(pageIndex, pageSize);
+		return userRepository.findAllUserRole(paging);
+	}
+
+	@Override
+	public List<UserDto> getAllUserDto() {
+		// TODO Auto-generated method stub
+		return userRepository.findAllUserRole();
+	}
 }

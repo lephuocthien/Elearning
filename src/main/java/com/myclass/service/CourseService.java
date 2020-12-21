@@ -11,6 +11,7 @@ import com.myclass.dto.CourseDto;
 
 public interface CourseService {
 	List<CourseDto> getAll();
+	List<CourseDto> getAllCourseDto();
 	CourseDto getById(int id);
 	void save(CourseDto dto);
 	void edit(CourseDto dto);
