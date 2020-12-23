@@ -107,7 +107,7 @@ public class Course implements Serializable{
 	 */
 	public Course(int id, String title, String image, int leturesCount, int hourCount, int viewCount, BigDecimal price,
 			int discount, BigDecimal promotionPrice, String description, String content, int categoryId,
-			Timestamp lastUpdate) {
+			Date lastUpdate) {
 		super();
 		this.id = id;
 		this.title = title;

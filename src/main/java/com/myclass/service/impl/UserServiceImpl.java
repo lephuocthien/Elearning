@@ -48,7 +48,13 @@ public class UserServiceImpl implements UserService {
 		}
 		return dtos;
 	}
-
+	
+	@Override
+	public List<UserDto> getAllUserDto() {
+		// TODO Auto-generated method stub
+		return userRepository.findAllUserRole();
+	}
+	
 	@Override
 	public UserDto getById(int id) {
 		UserDto dto = new UserDto();
@@ -113,11 +119,5 @@ public class UserServiceImpl implements UserService {
 		// TODO:
 		PageRequest paging = PageRequest.of(pageIndex, pageSize);
 		return userRepository.findAllUserRole(paging);
-	}
-
-	@Override
-	public List<UserDto> getAllUserDto() {
-		// TODO Auto-generated method stub
-		return userRepository.findAllUserRole();
 	}
 }

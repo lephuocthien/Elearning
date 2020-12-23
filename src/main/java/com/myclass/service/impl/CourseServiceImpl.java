@@ -12,26 +12,36 @@ import org.springframework.stereotype.Service;
 
 import com.myclass.dto.CourseDto;
 import com.myclass.entity.Course;
+import com.myclass.repository.CategoryRepository;
 import com.myclass.repository.CourseRepository;
+import com.myclass.repository.TargetRepository;
+import com.myclass.repository.VideoRepository;
 import com.myclass.service.CourseService;
+
 @Service
-public class CourseServiceImpl implements CourseService{
+public class CourseServiceImpl implements CourseService {
 
 	private CourseRepository courseRepository;
+	private VideoRepository videoRepository;
+	private TargetRepository targetRepository;
 	
 	/**
 	 * @param courseRepository
+	 * @param videoRepository
+	 * @param targetRepository
 	 */
-	public CourseServiceImpl(CourseRepository courseRepository) {
+	public CourseServiceImpl(CourseRepository courseRepository, VideoRepository videoRepository,
+			TargetRepository targetRepository) {
 		super();
 		this.courseRepository = courseRepository;
+		this.videoRepository = videoRepository;
+		this.targetRepository = targetRepository;
 	}
-
 	@Override
 	public List<CourseDto> getAll() {
 		List<Course> courses = courseRepository.findAll();
 		List<CourseDto> dtos = new ArrayList<CourseDto>();
-		for(Course course : courses) {
+		for (Course course : courses) {
 			CourseDto dto = new CourseDto();
 			dto.setId(course.getId());
 			dto.setTitle(course.getTitle());
@@ -50,7 +60,16 @@ public class CourseServiceImpl implements CourseService{
 		}
 		return dtos;
 	}
-
+	@Override
+	public List<CourseDto> getAllCourseDto() {
+		List<CourseDto> dtos = courseRepository.findAllCourseCategory();
+		for(int i=0; i<dtos.size();i++) {
+			dtos.get(i).setVideos(videoRepository.getAllVideoByCourseId(dtos.get(i).getId()));
+			dtos.get(i).setTargets(targetRepository.getAllTargetByCourseId(dtos.get(i).getId()));
+		}
+		return dtos;
+	}
+	
 	@Override
 	public CourseDto getById(int id) {
 		Course course = courseRepository.findById(id).get();
@@ -91,7 +110,7 @@ public class CourseServiceImpl implements CourseService{
 	@Override
 	public void edit(CourseDto dto) {
 		Course course = courseRepository.findById(dto.getId()).get();
-		if(course!=null) {
+		if (course != null) {
 			course.setTitle(dto.getTitle());
 			course.setImage(dto.getImage());
 			course.setLeturesCount(dto.getLeturesCount());
@@ -105,19 +124,12 @@ public class CourseServiceImpl implements CourseService{
 			course.setCategoryId(dto.getCategoryId());
 			courseRepository.save(course);
 		}
-		
+
 	}
 
 	@Override
 	public void remove(int id) {
 		courseRepository.deleteById(id);
-		
-	}
-
-	@Override
-	public List<CourseDto> getAllCourseDto() {
-//		return courseRepository.findAllCourseCategory();
-		return null;
 	}
 
 }

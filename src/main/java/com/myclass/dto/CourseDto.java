@@ -26,8 +26,8 @@ public class CourseDto {
 	private int categoryId;
 	private Date lastUpdate;
 	private String categoryTitle;
-//	private List<TargetDto> targets;
-//	private List<VideoDto> videos;
+	private List<TargetDto> targets;
+	private List<VideoDto> videos;
 
 	/**
 	 * 
@@ -94,7 +94,7 @@ public class CourseDto {
 	 */
 	public CourseDto(int id, String title, String image, int leturesCount, int hourCount, int viewCount,
 			BigDecimal price, int discount, BigDecimal promotionPrice, String description, String content,
-			 int categoryId, Timestamp lastUpdate, String categoryTitle) {
+			 int categoryId, Date lastUpdate, String categoryTitle) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -308,33 +308,33 @@ public class CourseDto {
 		this.categoryTitle = categoryTitle;
 	}
 
-//	/**
-//	 * @return the targets
-//	 */
-//	public List<TargetDto> getTargets() {
-//		return targets;
-//	}
-//
-//	/**
-//	 * @param targets the targets to set
-//	 */
-//	public void setTargets(List<TargetDto> targets) {
-//		this.targets = targets;
-//	}
-//
-//	/**
-//	 * @return the videos
-//	 */
-//	public List<VideoDto> getVideos() {
-//		return videos;
-//	}
-//
-//	/**
-//	 * @param videos the videos to set
-//	 */
-//	public void setVideos(List<VideoDto> videos) {
-//		this.videos = videos;
-//	}
+	/**
+	 * @return the targets
+	 */
+	public List<TargetDto> getTargets() {
+		return targets;
+	}
+
+	/**
+	 * @param targets the targets to set
+	 */
+	public void setTargets(List<TargetDto> targets) {
+		this.targets = targets;
+	}
+
+	/**
+	 * @return the videos
+	 */
+	public List<VideoDto> getVideos() {
+		return videos;
+	}
+
+	/**
+	 * @param videos the videos to set
+	 */
+	public void setVideos(List<VideoDto> videos) {
+		this.videos = videos;
+	}
 
 	
 }

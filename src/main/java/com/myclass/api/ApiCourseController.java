@@ -38,7 +38,7 @@ public class ApiCourseController {
 	@GetMapping("")
 	public ResponseEntity<Object> getAll() {
 		try {
-			List<CourseDto> dtos = courseService.getAll();
+			List<CourseDto> dtos = courseService.getAllCourseDto();
 			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
 		} catch (Exception ex) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
