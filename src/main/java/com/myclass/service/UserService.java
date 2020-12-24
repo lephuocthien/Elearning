@@ -15,8 +15,12 @@ import com.myclass.entity.User;
 public interface UserService {
 	List<UserDto> getAll();
 
+	List<UserDto> getAllUserDto();
+	
 	UserDto getById(int id);
-
+	
+	UserDto getUserDtoByEmail(String email);
+	
 	void save(UserDto dto);
 
 	void edit(UserDto dto);
@@ -27,5 +31,5 @@ public interface UserService {
 
 	Page<UserDto> getUserRolePaging(int pageIndex, int pageSize);
 	
-	List<UserDto> getAllUserDto();
+	
 }

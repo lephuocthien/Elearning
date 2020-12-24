@@ -10,6 +10,9 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,19 +23,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myclass.dto.UserDto;
+import com.myclass.service.CourseService;
 import com.myclass.service.UserService;
 
 @RestController
 @RequestMapping("api/user")
+@CrossOrigin("*")
 public class ApiUserController {
 	private UserService userService;
+	private CourseService courseService;
 
 	/**
 	 * @param userService
+	 * @param courseService
 	 */
-	public ApiUserController(UserService userService) {
+	public ApiUserController(UserService userService, CourseService courseService) {
 		super();
 		this.userService = userService;
+		this.courseService = courseService;
 	}
 
 	// Tìm all
@@ -40,6 +48,9 @@ public class ApiUserController {
 	public ResponseEntity<Object> getAll() {
 		try {
 			List<UserDto> dtos = userService.getAllUserDto();
+			for(int i =0 ; i<dtos.size(); i++) {
+				dtos.get(i).setCourses(courseService.getAllCourseDtoByUserId(dtos.get(i).getId()));
+			}
 			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
 		} catch (Exception ex) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
@@ -106,5 +117,29 @@ public class ApiUserController {
 		else
 			return new ResponseEntity<>("No user was found.", HttpStatus.BAD_REQUEST);
 
+	}
+	
+	@GetMapping("getUserByToken")
+	public Object getUserDtoByToken(){
+		try {
+			//Lấy thông tin user lưu trữ trong SercurityContext
+			System.out.println("agajhgfjhgak");
+			Object principal = SecurityContextHolder
+					.getContext()
+					.getAuthentication()
+					.getPrincipal();
+			//Ép kiểu về UserDetails
+			UserDetails userDetails = (UserDetails) principal;
+			System.out.println(principal);
+			//Lấy ra email
+			String email = userDetails.getUsername();
+			System.out.println(email);
+			//Lấy ra thông tin User để trả về cho client;
+			UserDto dto = userService.getUserDtoByEmail(email);
+			System.out.println(dto.getFullname());
+			return new ResponseEntity<UserDto>(dto, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		}
 	}
 }

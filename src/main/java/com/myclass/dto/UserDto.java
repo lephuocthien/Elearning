@@ -5,6 +5,8 @@
  */
 package com.myclass.dto;
 
+import java.util.List;
+
 public class UserDto {
 	
 	private int id;
@@ -16,6 +18,7 @@ public class UserDto {
 	private String address;
 	private int roleId;
 	private String roleName;
+	private List<CourseDto> courses;
 	/**
 	 * 
 	 */
@@ -44,6 +47,13 @@ public class UserDto {
 		this.phone = phone;
 		this.address = address;
 		this.roleId = roleId;
+		this.roleName = roleName;
+	}
+	
+	public UserDto(String email, String password, String roleName) {
+		super();
+		this.email = email;
+		this.password = password;
 		this.roleName = roleName;
 	}
 	/**
@@ -154,6 +164,19 @@ public class UserDto {
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
+	/**
+	 * @return the courses
+	 */
+	public List<CourseDto> getCourses() {
+		return courses;
+	}
+	/**
+	 * @param courses the courses to set
+	 */
+	public void setCourses(List<CourseDto> courses) {
+		this.courses = courses;
+	}
+	
 	
 	
 }

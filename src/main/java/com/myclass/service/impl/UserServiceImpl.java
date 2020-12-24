@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.myclass.dto.UserDto;
 import com.myclass.entity.User;
+import com.myclass.repository.CourseRepository;
 import com.myclass.repository.UserRepository;
 import com.myclass.service.UserService;
 
@@ -21,13 +22,16 @@ import com.myclass.service.UserService;
 public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
+	private CourseRepository courseRepository;
 	
 	/**
 	 * @param userRepository
+	 * @param courseRepository
 	 */
-	public UserServiceImpl(UserRepository userRepository) {
+	public UserServiceImpl(UserRepository userRepository, CourseRepository courseRepository) {
 		super();
 		this.userRepository = userRepository;
+		this.courseRepository = courseRepository;
 	}
 
 	@Override
@@ -51,10 +55,13 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public List<UserDto> getAllUserDto() {
-		// TODO Auto-generated method stub
 		return userRepository.findAllUserRole();
 	}
 	
+	@Override
+	public UserDto getUserDtoByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
 	@Override
 	public UserDto getById(int id) {
 		UserDto dto = new UserDto();

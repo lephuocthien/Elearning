@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.myclass.dto.UserDto;
@@ -21,4 +22,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	Page<UserDto> findAllUserRole(Pageable paging);
 	@Query("SELECT new com.myclass.dto.UserDto(u.id, u.email, u.password, u.fullname, u.phone, u.address, u.avatar, u.roleId, r.name) FROM User u JOIN Role r ON u.roleId = r.id")
 	List<UserDto> findAllUserRole();
+	@Query("SELECT new com.myclass.dto.UserDto(u.email, u.password, r.name) FROM User u JOIN Role r ON u.roleId = r.id WHERE u.email = :email")
+	UserDto findByEmail(@Param("email") String email);
 }

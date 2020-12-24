@@ -71,6 +71,16 @@ public class CourseServiceImpl implements CourseService {
 	}
 	
 	@Override
+	public List<CourseDto> getAllCourseDtoByUserId(int id) {
+		List<CourseDto> dtos = courseRepository.findAllCourseCategoryByUserId(id);
+		for(int i=0; i<dtos.size();i++) {
+			dtos.get(i).setVideos(videoRepository.getAllVideoByCourseId(dtos.get(i).getId()));
+			dtos.get(i).setTargets(targetRepository.getAllTargetByCourseId(dtos.get(i).getId()));
+		}
+		return dtos;
+	}
+	
+	@Override
 	public CourseDto getById(int id) {
 		Course course = courseRepository.findById(id).get();
 		CourseDto dto = new CourseDto();
