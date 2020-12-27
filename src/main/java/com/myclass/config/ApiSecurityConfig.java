@@ -49,7 +49,7 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter{
 		.disable()
 		.antMatcher("/api/**")//Chỉ những link bắt đầu bằng /api/ thì mới thực hiện phân quyền
 		.authorizeRequests()
-		.antMatchers("/api/auth")//Đối với link này thì không cần check thông tin đăng nhập
+		.antMatchers("/api/auth", "/api/category")//Đối với link này thì không cần check thông tin đăng nhập
 		.permitAll()
 		.antMatchers("/api/role/**")
 		.hasAnyAuthority("ROLE_ADMIN")

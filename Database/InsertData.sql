@@ -6,17 +6,17 @@ INSERT INTO roles( name, description ) VALUES ("ROLE_TEACHER", "Giáo viên");
 INSERT INTO roles( name, description ) VALUES ("ROLE_USER", "Học viên");
 
 -- Inser data to categories
-insert into categories (title, icon) values ('Development', 'vel');
-insert into categories (title, icon) values ('Photography', 'sit');
-insert into categories (title, icon) values ('Business', 'volutpat');
-insert into categories (title, icon) values ('IT & Software', 'non');
-insert into categories (title, icon) values ('Marketing', 'aenean');
-insert into categories (title, icon) values ('Music', 'sem');
-insert into categories (title, icon) values ('Design', 'commodo');
-insert into categories (title, icon) values ('Cooking', 'eget');
+insert into categories (title, icon) values ('Development', 'fa fa-laptop');
+insert into categories (title, icon) values ('Photography', 'fa fa-camera-retro');
+insert into categories (title, icon) values ('Business', 'fa fa-bar-chart');
+insert into categories (title, icon) values ('IT & Software', 'fa fa-desktop');
+insert into categories (title, icon) values ('Marketing', 'fa fa-handshake-o');
+insert into categories (title, icon) values ('Music', 'fa fa-music');
+insert into categories (title, icon) values ('Design', 'fa fa-pencil-square-o');
+insert into categories (title, icon) values ('Cooking', 'fa fa-cutlery');
 
 -- Insert data to users
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('wmenary0@slate.com', 'Wilone Menary', 'WQtnP2FE3q', 'https://robohash.org/officiisfaceremolestias.jpg?size=50x50&set=set1', '194-528-9732', '55334 Prairie Rose Parkway', 1);
+insert into users (email, fullname, password, avatar, phone, address, role_id) values ('wmenary0@slate.com', 'Wilone Menary', '$2a$10$sGe24ieMWTvF5vmZ.TntoO3k/Iqnl8V5SeLrCu72IgDugI/.zLOEe', 'https://robohash.org/officiisfaceremolestias.jpg?size=50x50&set=set1', '194-528-9732', '55334 Prairie Rose Parkway', 1);
 insert into users (email, fullname, password, avatar, phone, address, role_id) values ('mcornhill1@washington.edu', 'Marjy Cornhill', 'Z4scCpLHcW0a', 'https://robohash.org/temporaautemasperiores.jpg?size=50x50&set=set1', '338-330-8921', '68 Gerald Place', 2);
 insert into users (email, fullname, password, avatar, phone, address, role_id) values ('nhiseman2@nih.gov', 'Natka Hiseman', 'z5qnA7UNg', 'https://robohash.org/sedsaepecorporis.jpg?size=50x50&set=set1', '873-178-2150', '184 Monterey Place', 2);
 insert into users (email, fullname, password, avatar, phone, address, role_id) values ('hyate3@howstuffworks.com', 'Hoebart Yate', 'mX8gKXKDRBE', 'https://robohash.org/laboresedaut.jpg?size=50x50&set=set1', '760-449-4620', '3389 Moulton Alley', 2);

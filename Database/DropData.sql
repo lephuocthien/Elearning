@@ -1,10 +1,12 @@
 USE elearning;
 
-drop table users;
-drop table courses;
 drop table user_courses;
-drop table roles;
-drop table categories;
+drop table users;
 drop table targets;
 drop table videos;
+drop table courses;
+drop table roles;
+drop table categories;
+
+drop database elearning;
 
