@@ -18,10 +18,10 @@ import com.myclass.dto.UserDto;
 import com.myclass.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-	@Query("SELECT new com.myclass.dto.UserDto(u.id, u.email, u.password, u.fullname, u.phone, u.address, u.avatar, u.roleId, r.name) FROM User u JOIN Role r ON u.roleId = r.id")
+	@Query("SELECT new com.myclass.dto.UserDto(u.id, u.email, u.fullname, u.password, u.avatar, u.phone, u.address, u.roleId, r.name) FROM User u JOIN Role r ON u.roleId = r.id")
 	Page<UserDto> findAllUserRole(Pageable paging);
-	@Query("SELECT new com.myclass.dto.UserDto(u.id, u.email, u.password, u.fullname, u.phone, u.address, u.avatar, u.roleId, r.name) FROM User u JOIN Role r ON u.roleId = r.id")
-	List<UserDto> findAllUserRole();
+	@Query("SELECT new com.myclass.dto.UserDto(u.id, u.email, u.fullname, u.password, u.avatar, u.phone, u.address, u.roleId, r.name) FROM User u JOIN Role r ON u.roleId = r.id")
+	List<UserDto> findAllUserDto();
 	@Query("SELECT new com.myclass.dto.UserDto(u.email, u.password, r.name) FROM User u JOIN Role r ON u.roleId = r.id WHERE u.email = :email")
 	UserDto findByEmail(@Param("email") String email);
 	@Query("SELECT new com.myclass.dto.UserDto(u.id, u.email, u.fullname, u.password, u.avatar, u.phone, u.address, u.roleId, r.name) FROM User u JOIN Role r ON u.roleId = r.id WHERE u.email = :email")

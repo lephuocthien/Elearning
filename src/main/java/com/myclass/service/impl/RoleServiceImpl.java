@@ -41,7 +41,13 @@ public class RoleServiceImpl implements RoleService {
 		}
 		return dtos;
 	}
-
+	
+	@Override
+	public List<RoleDto> getNotAdmin() {
+		// TODO Auto-generated method stub
+		return roleRepository.findAllNotAdmin();
+	}
+	
 	@Override
 	public RoleDto getById(int id) {
 		Role role = roleRepository.findById(id).get();

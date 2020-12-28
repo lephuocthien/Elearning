@@ -11,6 +11,7 @@ import com.myclass.dto.RoleDto;
 
 public interface RoleService {
 	List<RoleDto> getAll();
+	List<RoleDto> getNotAdmin();
 	RoleDto getById(int id);;
 	void save(RoleDto dto);
 	void edit(RoleDto dto);

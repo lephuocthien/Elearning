@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.myclass.service.RoleService;
 
 @RestController
 @RequestMapping("api/role")
+@CrossOrigin("*")
 public class ApiRoleController {
 	private RoleService roleService;
 
@@ -45,6 +47,17 @@ public class ApiRoleController {
 		}
 	}
 
+	// Tìm tất cả trừ ROLE_ADMIN
+	@GetMapping("get-all-not-admin")
+	public ResponseEntity<Object> getAllNotAdmin() {
+		try {
+			List<RoleDto> dtos = roleService.getNotAdmin();
+			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	// Tìm theo id
 	@GetMapping("get/{id}")
 	public ResponseEntity<Object> getById(@PathVariable("id") int id) {
@@ -55,7 +68,7 @@ public class ApiRoleController {
 			return new ResponseEntity<Object>("Sai ID", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	// Thêm mới
 	@PostMapping("add")
 	public ResponseEntity<Object> add(@RequestBody RoleDto dto) {

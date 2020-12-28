@@ -25,7 +25,6 @@ import com.myclass.service.CategoryService;
 
 @RestController
 @RequestMapping("api/category")
-@CrossOrigin("*")
 public class ApiCategoryController {
 
 	private CategoryService categoryService;

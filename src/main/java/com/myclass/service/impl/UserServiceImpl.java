@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.myclass.dto.UserDto;
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
 	private CourseRepository courseRepository;
-	
+
 	/**
 	 * @param userRepository
 	 * @param courseRepository
@@ -52,16 +53,17 @@ public class UserServiceImpl implements UserService {
 		}
 		return dtos;
 	}
-	
+
 	@Override
 	public List<UserDto> getAllUserDto() {
-		return userRepository.findAllUserRole();
+		return userRepository.findAllUserDto();
 	}
-	
+
 	@Override
 	public UserDto getUserDtoByEmail(String email) {
 		return userRepository.findUserDtoByEmail(email);
 	}
+
 	@Override
 	public UserDto getById(int id) {
 		UserDto dto = new UserDto();
@@ -81,14 +83,14 @@ public class UserServiceImpl implements UserService {
 	public void save(UserDto dto) {
 		User user = new User();
 		user.setEmail(dto.getEmail());
-		user.setPassword(dto.getPassword());
+		user.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
 		user.setFullname(dto.getFullname());
 		user.setPhone(dto.getPhone());
 		user.setAddress(dto.getAddress());
 		user.setAvatar(dto.getAvatar());
 		user.setRoleId(dto.getRoleId());
 		userRepository.save(user);
-		
+
 	}
 
 	@Override
@@ -96,7 +98,8 @@ public class UserServiceImpl implements UserService {
 		User user = userRepository.findById(dto.getId()).get();
 		if (user != null) {
 			user.setEmail(dto.getEmail());
-			user.setPassword(dto.getPassword());
+			if (!dto.getPassword().equals(""))
+				user.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
 			user.setFullname(dto.getFullname());
 			user.setPhone(dto.getPhone());
 			user.setAddress(dto.getAddress());
@@ -104,7 +107,7 @@ public class UserServiceImpl implements UserService {
 			user.setRoleId(dto.getRoleId());
 			userRepository.save(user);
 		}
-		
+
 	}
 
 	@Override
@@ -112,12 +115,12 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		userRepository.deleteById(id);
 	}
-	
+
 	@Override
 	public Page<User> getUserPaging(int pageIndex, int pageSize) {
 		// TODO: get user paging
 		PageRequest paging = PageRequest.of(pageIndex, pageSize);
-		
+
 		return userRepository.findAll(paging);
 	}
 

@@ -28,9 +28,8 @@ import com.myclass.service.UserService;
 
 @RestController
 @RequestMapping("api/user")
-@CrossOrigin("*")
 public class ApiUserController {
-	
+
 	private UserService userService;
 	private CourseService courseService;
 
@@ -49,7 +48,7 @@ public class ApiUserController {
 	public ResponseEntity<Object> getAll() {
 		try {
 			List<UserDto> dtos = userService.getAllUserDto();
-			for(int i =0 ; i<dtos.size(); i++) {
+			for (int i = 0; i < dtos.size(); i++) {
 				dtos.get(i).setCourses(courseService.getAllCourseDtoByUserId(dtos.get(i).getId()));
 			}
 			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
@@ -73,8 +72,11 @@ public class ApiUserController {
 	@PostMapping("add")
 	public ResponseEntity<Object> add(@RequestBody UserDto dto) {
 		try {
-			userService.save(dto);
-			return new ResponseEntity<Object>("Thêm thành công!", HttpStatus.CREATED);
+			if (userService.getUserDtoByEmail(dto.getEmail()) == null) {
+				userService.save(dto);
+				return new ResponseEntity<Object>("Thêm thành công!", HttpStatus.CREATED);
+			}
+			return new ResponseEntity<Object>("Email đã tồn tại!", HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
@@ -85,7 +87,7 @@ public class ApiUserController {
 	public ResponseEntity<Object> edit(@PathVariable("id") int id, @RequestBody UserDto dto) {
 		try {
 			if (userService.getById(id) == null)
-				return new ResponseEntity<Object>("Id " + id + " không tồn tại", HttpStatus.CREATED);
+				return new ResponseEntity<Object>("Id " + id + " không tồn tại", HttpStatus.BAD_REQUEST);
 			userService.edit(dto);
 			return new ResponseEntity<Object>("Cập nhật thành công!", HttpStatus.CREATED);
 		} catch (Exception ex) {
@@ -119,30 +121,27 @@ public class ApiUserController {
 			return new ResponseEntity<>("No user was found.", HttpStatus.BAD_REQUEST);
 
 	}
-	
-	@GetMapping("getUserByToken")
-	public Object getUserDtoByToken(){
+
+	@GetMapping("get-user-by-token")
+	public Object getUserDtoByToken() {
 		try {
-			//Lấy thông tin user lưu trữ trong SercurityContext
-			System.out.println("agajhgfjhgak");
-			Object principal = SecurityContextHolder
-					.getContext()
-					.getAuthentication()
-					.getPrincipal();
-			//Ép kiểu về UserDetails
+			// Lấy thông tin user lưu trữ trong SercurityContext
+//			System.out.println("agajhgfjhgak");
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			// Ép kiểu về UserDetails
 			UserDetails userDetails = (UserDetails) principal;
 			System.out.println(principal);
-			//Lấy ra email
+			// Lấy ra email
 			String email = userDetails.getUsername();
 			System.out.println(email);
-			//Lấy ra thông tin User để trả về cho client;
+			// Lấy ra thông tin User để trả về cho client;
 			UserDto dto = userService.getUserDtoByEmail(email);
+			dto.setCourses(courseService.getAllCourseDtoByUserId(dto.getId()));
 			System.out.println(dto.getFullname());
 			return new ResponseEntity<UserDto>(dto, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
+
 }

@@ -25,7 +25,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
 @RequestMapping("api/auth")
-@CrossOrigin("*")
 public class ApiAuthController {
 
 	@Autowired
