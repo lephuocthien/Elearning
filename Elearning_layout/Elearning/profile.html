@@ -100,8 +100,8 @@
     <section class="course-banner">
         <div class="container">
             <div class="banner-content">
-                <h1 id="bannerFullname">Nguyễn Tiến Hoàng</h1>
-                <h5 id="bannerEmail">tienhoang1211@gmail.com</h5>
+                <h1 id="bannerProFullname">Nguyễn Tiến Hoàng</h1>
+                <h5 id="bannerProEmail">tienhoang1211@gmail.com</h5>
             </div>
         </div>
     </section>
@@ -174,18 +174,20 @@
                             </div>
                         </div>
                         <div class="tab-pane container-fluid fade picture" id="picture">
+                            <h6 id="updateAvatarMess"></h6>
                             <div class="row">
                                 <div class="col-md-6">
                                     <h6>Image preview</h6>
                                     <small>Minimum 200x200 pixels, Maximum 6000x6000 pixels</small>
                                     <div class="picture-wapper">
                                         <div class="picture-img">
-                                            <img src="https://i.udemycdn.com/user/200_H/anonymous_3.png" alt="">
+                                            <!-- src="https://i.udemycdn.com/user/200_H/anonymous_3.png" -->
+                                            <img id="imgAvatar" src="https://i.udemycdn.com/user/200_H/anonymous_3.png" alt="">
                                         </div>
                                     </div>
-                                    <input type="file" class="form-control" />
+                                    <input type="file" id="uploadFile" class="form-control" />
                                     <input type="hidden" name="avatar"/>
-                                    <button class="btn btn-outline-secondary mt-3">Save</button>
+                                    <button class="btn btn-outline-secondary mt-3" onclick="updateAvatar()">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -231,7 +233,7 @@
     <script src="./js/profile.js"></script>
     <script src="./js/userInforDropdown.js"></script>
     <script src="./js/category.js"></script>
-    <script src="./lib/dropzone/dropzone.min.js"></script>
+    <script src="./js/upload-file.js"></script>
 </body>
 
 </html>

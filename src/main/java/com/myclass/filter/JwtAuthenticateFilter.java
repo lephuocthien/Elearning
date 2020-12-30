@@ -32,7 +32,7 @@ public class JwtAuthenticateFilter  extends BasicAuthenticationFilter{
 		// B1: Lấy token từ request
 		try {
 		String authorization = request.getHeader("Authorization");
-		System.out.println(authorization);
+//		System.out.println(authorization);
 //		System.out.println(authorization.startsWith("Bearer"));
 //		 && authorization.startsWith("Bearer")
 		if(authorization!=null && authorization.startsWith("Bearer ")) {
@@ -40,7 +40,7 @@ public class JwtAuthenticateFilter  extends BasicAuthenticationFilter{
 			
 			String token = authorization.replace("Bearer ","");
 //			String token = authorization;
-			System.out.println(token);
+//			System.out.println(token);
 			String email = Jwts.parser()
 			.setSigningKey("ChuoiBiMat")
 			.parseClaimsJws(token)

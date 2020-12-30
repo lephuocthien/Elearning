@@ -26,4 +26,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	UserDto findByEmail(@Param("email") String email);
 	@Query("SELECT new com.myclass.dto.UserDto(u.id, u.email, u.fullname, u.password, u.avatar, u.phone, u.address, u.roleId, r.name) FROM User u JOIN Role r ON u.roleId = r.id WHERE u.email = :email")
 	UserDto findUserDtoByEmail(@Param("email") String email);
+	@Query("SELECT new com.myclass.dto.UserDto(u.id, u.email, u.fullname, u.password, u.avatar, u.phone, u.address, u.roleId, r.name) FROM User u JOIN Role r ON u.roleId = r.id WHERE u.id = :id")
+	UserDto findUserDtoById(@Param("id") int id);
 }

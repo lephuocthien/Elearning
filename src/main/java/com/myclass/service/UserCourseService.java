@@ -8,8 +8,10 @@ package com.myclass.service;
 import java.util.List;
 
 import com.myclass.dto.UserCourseDto;
+import com.myclass.entity.UserCourseId;
 
 public interface UserCourseService {
 	List<UserCourseDto> getAll();
+	UserCourseDto getById(UserCourseId userCourseId);
 	void save(UserCourseDto dto);
 }

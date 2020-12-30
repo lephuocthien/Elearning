@@ -1,9 +1,5 @@
-// let token = localStorage.getItem("USER_TOKEN");
-// if(!token){
-//     //Nếu token null hoặc rỗng (chưa đăng nhập)
-//     window.location.href="/index.html";
-// }
-let getAll = () => {
+
+let getAll = function(){
     axios({
         url: "http://localhost:8087/api/category",
         method: "GET"

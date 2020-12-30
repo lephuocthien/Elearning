@@ -19,6 +19,8 @@ public interface UserService {
 	
 	UserDto getById(int id);
 	
+	UserDto getUserDtoById(int id);
+	
 	UserDto getUserDtoByEmail(String email);
 	
 	void save(UserDto dto);

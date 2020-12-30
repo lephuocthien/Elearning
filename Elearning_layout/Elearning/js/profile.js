@@ -5,10 +5,35 @@ if (!user) {
     //Nếu token null hoặc rỗng (chưa đăng nhập)
     window.location.href = "/index.html";
 }
+let imgName;
+let uploadFile = document.getElementById("uploadFile");
+uploadFile.addEventListener("change", function (event) {
+    let file = event.target.files[0];
+    console.log(file);
+    let formData = new FormData();
+    formData.append("file", file);
+
+    axios({
+        url: `http://localhost:8087/api/user/file/upload/${user.id}`,
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        data: formData
+    })
+        .then(function (resp) {
+            imgName = resp.data;
+            let imgUrl = `http://localhost:8087/api/user/file/load/${user.id}/${imgName}`;
+            document.getElementById('imgAvatar').setAttribute("src", imgUrl);
+        })
+        .catch(function (e) {
+            console.log(e.resp)
+        });
+})
 let setProfile = function () {
     user = JSON.parse(localStorage.getItem('USER_INFOR'));
-    document.getElementById("bannerFullname").innerHTML = user.fullname;
-    document.getElementById("bannerEmail").innerHTML = user.email;
+    document.getElementById("bannerProFullname").innerHTML = user.fullname;
+    document.getElementById("bannerProEmail").innerHTML = user.email;
 
     document.getElementById("fmFullname").value = user.fullname;
     document.getElementById("fmEmail").value = user.email;
@@ -16,6 +41,11 @@ let setProfile = function () {
     document.getElementById("fmPhone").value = user.phone;
 
     document.getElementById("securityEmail").value = user.email;
+    if (!(!user.avatar)) {
+        let imgUrl = `http://localhost:8087/api/user/file/load/${user.id}/${user.avatar}`;
+        document.getElementById('imgAvatar').setAttribute("src", imgUrl);
+    }
+
 }
 
 let loadUserInfor = function () {
@@ -31,8 +61,9 @@ let loadUserInfor = function () {
             let userTemp = resp.data;
             console.log(resp.data);
             localStorage.setItem("USER_INFOR", JSON.stringify(userTemp));
-            let tbody = document.getElementById("dropdownId");
-            tbody.innerHTML = userTemp.fullname;
+            // let tbody = document.getElementById("dropdownId");
+            // tbody.innerHTML = userTemp.fullname;
+            setInforDropDown();
             setProfile();
         })
         .catch(function (e) {
@@ -67,7 +98,7 @@ let updateProfile = function () {
             console.log(response.data);
             if (email === user.email) {
                 loadUserInfor();
-                setProfile();
+                // setProfile();
                 document.getElementById("updateMess").classList.add("text-success");
                 document.getElementById("updateMess").innerHTML = "Update success !";
             } else {
@@ -128,6 +159,41 @@ let updatePassword = function () {
     }
 };
 
-let updateAvatar;
+let updateAvatar = function () {
+    if (!(!imgName)) {
+        axios({
+            url: `http://localhost:8087/api/user/update/${user.id}`,
+            method: "PUT",
+            responseType: 'json',
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            data: {
+                avatar: imgName,
+                id: user.id,
+                fullname: user.fullname,
+                email: user.email,
+                address: user.address,
+                phone: user.phone,
+                roleId: user.roleId,
+                password: ""
+            }
+        })
+            //Xữ lý mã trạng thái bắt đầu bằng số 2
+            .then(function (response) {
+                console.log(response.data);
+                loadUserInfor();
+                // setProfile();
+                document.getElementById("updateAvatarMess").classList.add("text-success");
+                document.getElementById("updateAvatarMess").innerHTML = "Update success !";
+            })
+            //Xữ lý mã trạng thái còn lại
+            .catch(function (e) {
+                console.log(e.response);
+                document.getElementById("updateAvatarMess").classList.add("text-danger");
+                document.getElementById("updateAvatarMess").innerHTML = "Invalid Image !";
+            });
+    }
+};
 
 setProfile();

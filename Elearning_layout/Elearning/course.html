@@ -31,8 +31,8 @@
                                     <i class="fa fa-th"></i>
                                     <span class="ml-2">Categories</span>
                                 </a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">
+                                <div class="dropdown-menu" id="categoryMenuDropdown">
+                                    <!-- <a class="dropdown-item" href="#">
                                         <i class="fa fa-laptop mr-1"></i>
                                         <span>Development</span>
                                     </a>
@@ -63,7 +63,7 @@
                                     <a class="dropdown-item" href="#">
                                         <i class="fa fa-cutlery mr-1"></i>
                                         <span>Cooking</span>
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                         </li>
@@ -90,7 +90,7 @@
     <nav aria-label="breadcrumb">
         <div class="container-fluid">
             <ol class="breadcrumb bg-white mb-0 py-2">
-                <li class="breadcrumb-item"><a href="#"><i class="fa fa-home mr-1"></i> Home</a></li>
+                <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-home mr-1"></i> Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">My course</li>
             </ol>
         </div>
@@ -99,8 +99,8 @@
     <section class="course-banner">
         <div class="container">
             <div class="banner-content">
-                <h1>My course</h1>
-                <h5>tienhoang1211@gmail.com</h5>
+                <h1 id="bannerCourseFullname"></h1>
+                <h5 id="bannerCourseEmail"></h5>
             </div>
         </div>
     </section>
@@ -108,8 +108,8 @@
     <!-- BEGIN CONTENT -->
     <section class="mt-5">
         <div class="container">
-            <div class="row">
-                <div class="col-md-3">
+            <div class="row" id="listMyCourse">
+                <!-- <div class="col-md-3">
                     <a href="#" class="my-course-item">
                         <img src="./img/html-css.jpg" alt="">
                         <h6 class="my-course-title">React - The Complete Guide (incl Hooks, React Router, Redux) </h6>
@@ -238,7 +238,7 @@
                             </h6>
                         </div>
                     </a>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
@@ -252,8 +252,11 @@
     <script src="./lib/jquery/jquery.slim.min.js"></script>
     <script src="./lib/popper.js/popper.min.js"></script>
     <script src="./lib/bootstrap/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/courses.js"></script>
     <script src="./js/login.js"></script>
     <script src="./js/userInforDropdown.js"></script>
+    <script src="./js/category.js"></script>
 </body>
 
 </html>

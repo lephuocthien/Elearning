@@ -39,10 +39,20 @@ public class UserCourseServiceImpl implements UserCourseService {
 	}
 	
 	@Override
+	public UserCourseDto getById(UserCourseId userCourseId) {
+		UserCourse userCourse = userCourseRepository.findById(userCourseId).get();
+		UserCourseDto dto = new UserCourseDto();
+		dto.setUserId(userCourse.getUserCourseId().getUserId());
+		dto.setCourseId(userCourse.getUserCourseId().getCourseId());
+		dto.setRoleId(userCourse.getRoleId());
+		return dto;
+	}
+	@Override
 	public void save(UserCourseDto dto) {
 //		userCourse.getCourse().getUserCourses().add(userCourse);
 //		userCourse.getUser().getUserCourses().add(userCourse);
 		//System.out.println(userCourse.getUserCourseId().getUserId()+" "+userCourse.getUserCourseId().getCourseId()+" "+userCourse.getRoleId());
 		userCourseRepository.saveUserCourse(dto.getUserId(), dto.getCourseId(), dto.getRoleId());
 	}
+	
 }

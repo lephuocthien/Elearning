@@ -2,13 +2,17 @@ var user;
 let setInforDropDown = function () {
     user = JSON.parse(localStorage.getItem('USER_INFOR'));
     let tbody = document.getElementById("userInforDropdown");
+    let imgUrl = `https://i.udemycdn.com/user/200_H/anonymous_3.png`;
     let content = '';
     if (!(!user)) {
+        if (!(!user.avatar))
+            imgUrl = `http://localhost:8087/api/user/file/load/${user.id}/${user.avatar}`;
         content += `
     <div class="collapse navbar-collapse" id="collapsibleNavId">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="dropdownId"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img id="imgDropdown" src="${imgUrl}" alt="Avatar" width="36" class="avatar" />
                 Hi, ${user.fullname}
                                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownId">

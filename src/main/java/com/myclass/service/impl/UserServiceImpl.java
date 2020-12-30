@@ -58,7 +58,12 @@ public class UserServiceImpl implements UserService {
 	public List<UserDto> getAllUserDto() {
 		return userRepository.findAllUserDto();
 	}
-
+	
+	@Override
+	public UserDto getUserDtoById(int id) {
+		return userRepository.findUserDtoById(id);
+	}
+	
 	@Override
 	public UserDto getUserDtoByEmail(String email) {
 		return userRepository.findUserDtoByEmail(email);

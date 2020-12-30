@@ -5,9 +5,15 @@
  */
 package com.myclass.api;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +22,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.myclass.dto.CourseDto;
 import com.myclass.service.CourseService;
@@ -24,6 +33,7 @@ import com.myclass.service.CourseService;
 @RestController
 @RequestMapping("api/course")
 public class ApiCourseController {
+	private final String UPLOAD_FOLDER = "/src/main/resources/upload/course/";
 	private CourseService courseService;
 
 	/**
@@ -38,13 +48,22 @@ public class ApiCourseController {
 	@GetMapping("")
 	public ResponseEntity<Object> getAll() {
 		try {
-			List<CourseDto> dtos = courseService.getAllCourseDto();
+			List<CourseDto> dtos = courseService.getAll();
 			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
 		} catch (Exception ex) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
+	@GetMapping("get-dto")
+	public ResponseEntity<Object> getAllDto() {
+		try {
+			List<CourseDto> dtos = courseService.getAllCourseDto();
+			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
+		} catch (Exception ex) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		}
+	} 
 	// Tìm theo id
 	@GetMapping("get/{id}")
 	public ResponseEntity<Object> getById(@PathVariable("id") int id) {
@@ -55,6 +74,27 @@ public class ApiCourseController {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	// Tìm theo id trả về dto
+		@GetMapping("get-dto/{id}")
+		public ResponseEntity<Object> getDtoById(@PathVariable("id") int id) {
+			try {
+				CourseDto dto = courseService.getDtoById(id);
+				return new ResponseEntity<Object>(dto, HttpStatus.OK);
+			} catch (Exception ex) {
+				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+			}
+		}
+		
+	// Tìm theo user id
+		@GetMapping("get-course-by-user-id/{id}")
+		public ResponseEntity<Object> getAllByUserId(@PathVariable("id") int id) {
+			try {
+				List<CourseDto> dtos = courseService.getAllCourseDtoByUserId(id);
+				return new ResponseEntity<Object>(dtos, HttpStatus.OK);
+			} catch (Exception ex) {
+				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+			}
+		}
 
 	// Thêm mới
 	@PostMapping("add")
@@ -90,5 +130,39 @@ public class ApiCourseController {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@PostMapping(value = "file/upload", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Object upload(@RequestParam() MultipartFile file) {
+		try {
+			String pathName = System.getProperty("user.dir");
+			pathName += UPLOAD_FOLDER;
+			File dir = new File(pathName);
+			if (!dir.exists())
+				dir.mkdirs();
 
+			String pathSource = pathName + file.getOriginalFilename();
+			File serverFile = new File(pathSource);
+			FileOutputStream stream;
+			try {
+				stream = new FileOutputStream(serverFile);
+				stream.write(file.getBytes());
+				stream.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return new ResponseEntity<Object>(file.getOriginalFilename(), HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		}	
+	}
+	@GetMapping(value = "file/load/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@ResponseBody
+	public FileSystemResource getFile(@PathVariable("fileName") String fileName) throws IOException {
+		String pathName = System.getProperty("user.dir");
+		pathName += UPLOAD_FOLDER + fileName;
+		return new FileSystemResource(pathName);
+	}
 }
