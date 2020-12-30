@@ -99,7 +99,7 @@ let updateProfile = function () {
             if (email === user.email) {
                 loadUserInfor();
                 // setProfile();
-                document.getElementById("updateMess").classList.add("text-success");
+                document.getElementById("updateMess").className = "text-success";
                 document.getElementById("updateMess").innerHTML = "Update success !";
             } else {
                 alert(`Cập nhật thành công email! Vui lòng đăng nhập lại !`);
@@ -109,7 +109,7 @@ let updateProfile = function () {
         //Xữ lý mã trạng thái còn lại
         .catch(function (e) {
             console.log(e.response);
-            document.getElementById("updateMess").classList.add("text-danger");
+            document.getElementById("updateMess").className = "text-danger";
             document.getElementById("updateMess").innerHTML = "Invalid email !";
         });
 };
@@ -146,14 +146,14 @@ let updatePassword = function () {
             .then(function (response) {
                 console.log(response.data);
                 loadUserInfor();
-                document.getElementById("updateSecurityMess").classList.add("text-success");
+                document.getElementById("updateSecurityMess").className="text-success";
                 document.getElementById("updateSecurityMess").innerHTML = "Update success !";
 
             })
             //Xữ lý mã trạng thái còn lại
             .catch(function (e) {
                 console.log(e.response);
-                document.getElementById("updateSecurityMess").classList.add("text-danger");
+                document.getElementById("updateSecurityMess").className="text-danger";
                 document.getElementById("updateSecurityMess").innerHTML = "Password incorrect !";
             });
     }
@@ -184,13 +184,13 @@ let updateAvatar = function () {
                 console.log(response.data);
                 loadUserInfor();
                 // setProfile();
-                document.getElementById("updateAvatarMess").classList.add("text-success");
+                document.getElementById("updateAvatarMess").className="text-success";
                 document.getElementById("updateAvatarMess").innerHTML = "Update success !";
             })
             //Xữ lý mã trạng thái còn lại
             .catch(function (e) {
                 console.log(e.response);
-                document.getElementById("updateAvatarMess").classList.add("text-danger");
+                document.getElementById("updateAvatarMess").className="text-danger";
                 document.getElementById("updateAvatarMess").innerHTML = "Invalid Image !";
             });
     }
