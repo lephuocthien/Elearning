@@ -5,7 +5,7 @@ if (!user) {
     //Nếu token null hoặc rỗng (chưa đăng nhập)
     window.location.href = "/index.html";
 }
-let imgName;
+let imgName="";
 let uploadFile = document.getElementById("uploadFile");
 uploadFile.addEventListener("change", function (event) {
     let file = event.target.files[0];
@@ -32,6 +32,7 @@ uploadFile.addEventListener("change", function (event) {
 })
 let setProfile = function () {
     user = JSON.parse(localStorage.getItem('USER_INFOR'));
+    console.log(user)
     document.getElementById("bannerProFullname").innerHTML = user.fullname;
     document.getElementById("bannerProEmail").innerHTML = user.email;
 
@@ -53,6 +54,9 @@ let updateProfile = function () {
     let address = document.getElementById("fmAddress").value;
     let phone = document.getElementById("fmPhone").value;
     let email = document.getElementById("fmEmail").value;
+    if(!(!user.avatar)){
+        imgName=user.avatar;
+    }
     axios({
         url: `http://localhost:8087/api/user/update/${user.id}`,
         method: "PUT",
@@ -61,6 +65,7 @@ let updateProfile = function () {
             "Authorization": "Bearer " + token
         },
         data: {
+            avatar: imgName,
             id: user.id,
             fullname: fullname,
             email: email,
@@ -75,7 +80,7 @@ let updateProfile = function () {
             console.log(response.data);
             if (email === user.email) {
                 loadUserInfor();
-                setProfile();
+                // setProfile();
                 document.getElementById("updateMess").className = "text-success";
                 document.getElementById("updateMess").innerHTML = "Update success !";
             } else {
@@ -93,6 +98,9 @@ let updateProfile = function () {
 let updatePassword = function () {
     let password = document.getElementById("securityPassword").value;
     let confirmPassword = document.getElementById("securityConfirmPassword").value;
+    if(!(!user.avatar)){
+        imgName=user.avatar;
+    }
     if ((password !== confirmPassword) || (!password)) {
         document.getElementById("updateSecurityMess").classList.add("text-danger");
         document.getElementById("updateSecurityMess").innerHTML = "Password incorrect !";
@@ -110,6 +118,7 @@ let updatePassword = function () {
                 "Authorization": "Bearer " + token
             },
             data: {
+                avatar:  imgName,
                 id: user.id,
                 fullname: user.fullname,
                 email: user.email,
@@ -160,7 +169,7 @@ let updateAvatar = function () {
             .then(function (response) {
                 console.log(response.data);
                 loadUserInfor();
-                setProfile();
+                // setProfile();
                 document.getElementById("updateAvatarMess").className="text-success";
                 document.getElementById("updateAvatarMess").innerHTML = "Update success !";
             })

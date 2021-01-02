@@ -59,10 +59,12 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter{
 		.permitAll()
 		.antMatchers("/api/role/**")
 		.hasAnyAuthority("ROLE_ADMIN")
-		.antMatchers("/api/user/get-user-by-token")
+		.antMatchers("/api/user/get-user-by-token",
+				"/api/user/update/**",
+				"/api/user/file/**")
 		.hasAnyAuthority("ROLE_TEACHER","ROLE_ADMIN","ROLE_USER")
-		.antMatchers("/api/user/get/**")
-		.hasAnyAuthority("ROLE_TEACHER")
+		.antMatchers("/api/user/get-user-by-teacher/**")
+		.hasAnyAuthority("ROLE_TEACHER","ROLE_ADMIN")
 		.antMatchers("/api/user/**")
 		.hasAnyAuthority("ROLE_ADMIN")
 		.anyRequest()// Các link còn lại bắt buộc phải đăng nhập trước mới có thể  truy cập (cần phải có token)

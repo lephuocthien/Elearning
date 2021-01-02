@@ -126,6 +126,7 @@ let loadUserInfor = function () {
             console.log(resp.data);
             localStorage.setItem("USER_INFOR", JSON.stringify(userTemp));
             setInforDropDown();
+            setProfile();
         })
         .catch(function (e) {
             console.log(e.resp)

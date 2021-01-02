@@ -108,7 +108,8 @@ public class UserServiceImpl implements UserService {
 			user.setFullname(dto.getFullname());
 			user.setPhone(dto.getPhone());
 			user.setAddress(dto.getAddress());
-			user.setAvatar(dto.getAvatar());
+			if(!dto.getAvatar().equals(""))
+				user.setAvatar(dto.getAvatar());
 			user.setRoleId(dto.getRoleId());
 			userRepository.save(user);
 		}
@@ -134,5 +135,11 @@ public class UserServiceImpl implements UserService {
 		// TODO:
 		PageRequest paging = PageRequest.of(pageIndex, pageSize);
 		return userRepository.findAllUserRole(paging);
+	}
+
+	@Override
+	public List<UserDto> getAllUserDtoOfCourseByTeacher(int courseId) {
+		// TODO Auto-generated method stub
+		return userRepository.findUserDtoOfCourseByTeacher(courseId);
 	}
 }

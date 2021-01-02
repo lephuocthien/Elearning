@@ -79,6 +79,16 @@ public class ApiUserController {
 		}
 	}
 
+	@GetMapping("get-user-by-teacher/{courseId}")
+	public ResponseEntity<Object> getUserByTeacher(@PathVariable("courseId") int courseId) {
+		try {
+			List<UserDto> dtos = userService.getAllUserDtoOfCourseByTeacher(courseId);
+			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
+		} catch (Exception ex) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	// Thêm mới
 	@PostMapping("add")
 	public ResponseEntity<Object> add(@RequestBody UserDto dto) {
