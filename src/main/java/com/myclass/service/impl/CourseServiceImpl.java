@@ -73,7 +73,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 	@Override
 	public List<CourseDto> getAllCourseDto() {
-		List<CourseDto> dtos = courseRepository.findAllDtoCourseCategory();
+		List<CourseDto> dtos = courseRepository.findAllDtoCourse();
 		for(int i=0; i<dtos.size();i++) {
 			dtos.get(i).setVideos(videoRepository.getAllVideoByCourseId(dtos.get(i).getId()));
 			dtos.get(i).setTargets(targetRepository.getAllTargetByCourseId(dtos.get(i).getId()));
@@ -83,7 +83,17 @@ public class CourseServiceImpl implements CourseService {
 	
 	@Override
 	public List<CourseDto> getAllCourseDtoByUserId(int userId) {
-		List<CourseDto> dtos = courseRepository.findAllDtoCourseCategoryByUserId(userId);
+		List<CourseDto> dtos = courseRepository.findAllDtoCourseByUserId(userId);
+		for(int i=0; i<dtos.size();i++) {
+			dtos.get(i).setVideos(videoRepository.getAllVideoByCourseId(dtos.get(i).getId()));
+			dtos.get(i).setTargets(targetRepository.getAllTargetByCourseId(dtos.get(i).getId()));
+		}
+		return dtos;
+	}
+	
+	@Override
+	public List<CourseDto> getAllCourseDtoByTitle(String key) {
+		List<CourseDto> dtos = courseRepository.findAllDtoCourseByTitle(key);
 		for(int i=0; i<dtos.size();i++) {
 			dtos.get(i).setVideos(videoRepository.getAllVideoByCourseId(dtos.get(i).getId()));
 			dtos.get(i).setTargets(targetRepository.getAllTargetByCourseId(dtos.get(i).getId()));

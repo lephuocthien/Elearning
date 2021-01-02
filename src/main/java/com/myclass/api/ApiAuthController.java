@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myclass.dto.LoginDto;
+import com.myclass.dto.UserDto;
+import com.myclass.service.UserService;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -29,16 +31,30 @@ public class ApiAuthController {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	private UserService userService;
+	
+	
 
-//	public ApiAuthController() {
-//		this.authenticationManager = new AuthenticationManager() {
-//			@Override
-//			public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-//				// TODO Auto-generated method stub
-//				return null;
-//			}
-//		};
-//	}
+	/**
+	 * @param userService
+	 */
+	public ApiAuthController(UserService userService) {
+		super();
+		this.userService = userService;
+	}
+
+	@PostMapping("register")
+	public ResponseEntity<Object> add(@RequestBody UserDto dto) {
+		try {
+			if (userService.getUserDtoByEmail(dto.getEmail()) == null) {
+				userService.save(dto);
+				return new ResponseEntity<Object>("Thêm thành công!", HttpStatus.CREATED);
+			}
+			return new ResponseEntity<Object>("Email đã tồn tại!", HttpStatus.BAD_REQUEST);
+		} catch (Exception ex) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	@PostMapping("")
 	public ResponseEntity<Object> login(@RequestBody LoginDto loginDto) {

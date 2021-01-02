@@ -54,7 +54,8 @@ public class ApiCourseController {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
+	// Tìm all dto
 	@GetMapping("get-dto")
 	public ResponseEntity<Object> getAllDto() {
 		try {
@@ -63,7 +64,8 @@ public class ApiCourseController {
 		} catch (Exception ex) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
-	} 
+	}
+
 	// Tìm theo id
 	@GetMapping("get/{id}")
 	public ResponseEntity<Object> getById(@PathVariable("id") int id) {
@@ -74,27 +76,40 @@ public class ApiCourseController {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	// Tìm theo id trả về dto
-		@GetMapping("get-dto/{id}")
-		public ResponseEntity<Object> getDtoById(@PathVariable("id") int id) {
-			try {
-				CourseDto dto = courseService.getDtoById(id);
-				return new ResponseEntity<Object>(dto, HttpStatus.OK);
-			} catch (Exception ex) {
-				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
-			}
+
+	// Tìm dto theo id
+	@GetMapping("get-dto/{id}")
+	public ResponseEntity<Object> getDtoById(@PathVariable("id") int id) {
+		try {
+			CourseDto dto = courseService.getDtoById(id);
+			return new ResponseEntity<Object>(dto, HttpStatus.OK);
+		} catch (Exception ex) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
-		
-	// Tìm theo user id
-		@GetMapping("get-course-by-user-id/{id}")
-		public ResponseEntity<Object> getAllByUserId(@PathVariable("id") int id) {
-			try {
-				List<CourseDto> dtos = courseService.getAllCourseDtoByUserId(id);
-				return new ResponseEntity<Object>(dtos, HttpStatus.OK);
-			} catch (Exception ex) {
-				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
-			}
+	}
+
+	// Tìm tất cả dto theo title
+	@GetMapping("search-dto/{key}")
+	public ResponseEntity<Object> getDtoByTitle(@PathVariable("key") String key) {
+		try {
+			key = "%"+key+"%";
+			List<CourseDto> dtos = courseService.getAllCourseDtoByTitle(key);
+			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
+		} catch (Exception ex) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
+	}
+
+	// Tìm theo userId
+	@GetMapping("get-course-by-user-id/{id}")
+	public ResponseEntity<Object> getAllByUserId(@PathVariable("id") int id) {
+		try {
+			List<CourseDto> dtos = courseService.getAllCourseDtoByUserId(id);
+			return new ResponseEntity<Object>(dtos, HttpStatus.OK);
+		} catch (Exception ex) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	// Thêm mới
 	@PostMapping("add")
@@ -130,7 +145,7 @@ public class ApiCourseController {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PostMapping(value = "file/upload", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Object upload(@RequestParam() MultipartFile file) {
@@ -156,8 +171,9 @@ public class ApiCourseController {
 			return new ResponseEntity<Object>(file.getOriginalFilename(), HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
-		}	
+		}
 	}
+
 	@GetMapping(value = "file/load/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
 	public FileSystemResource getFile(@PathVariable("fileName") String fileName) throws IOException {

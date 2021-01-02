@@ -1,10 +1,11 @@
 var user = JSON.parse(localStorage.getItem('USER_INFOR'));
 let token = localStorage.getItem("USER_TOKEN");
-console.log(user);
+// console.log(user);
 if (!user) {
     //Nếu token null hoặc rỗng (chưa đăng nhập)
     window.location.href = "/index.html";
 }
+loadUserInfor();
 document.getElementById("bannerCourseFullname").innerHTML = user.fullname + "'s Course";
 document.getElementById("bannerCourseEmail").innerHTML = user.email;
 

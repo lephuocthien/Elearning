@@ -1,7 +1,7 @@
 
 
 // GỌI API LOAD THÔNG TIN ROLE LÊN FORM
-
+// window.location.href = `/search.html`;
 let login = function () {
     let email = document.getElementById("loginEmail").value;
     let password = document.getElementById("loginPassword").value;
@@ -85,7 +85,7 @@ let register = function () {
     }
     else {
         axios({
-            url: `http://localhost:8087/api/user/add`,
+            url: `http://localhost:8087/api/auth/register`,
             method: "POST",
             data: {
                 fullname: fullname,
@@ -111,3 +111,23 @@ let register = function () {
     }
 
 }
+
+let loadUserInfor = function () {
+    console.log(token);
+    axios({
+        url: `http://localhost:8087/api/user/get-user-by-token`,
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    })
+        .then(function (resp) {
+            let userTemp = resp.data;
+            console.log(resp.data);
+            localStorage.setItem("USER_INFOR", JSON.stringify(userTemp));
+            setInforDropDown();
+        })
+        .catch(function (e) {
+            console.log(e.resp)
+        });
+};

@@ -46,29 +46,6 @@ let setProfile = function () {
         document.getElementById('imgAvatar').setAttribute("src", imgUrl);
     }
 
-}
-
-let loadUserInfor = function () {
-    console.log(token);
-    axios({
-        url: `http://localhost:8087/api/user/get-user-by-token`,
-        method: "GET",
-        headers: {
-            "Authorization": "Bearer " + token
-        }
-    })
-        .then(function (resp) {
-            let userTemp = resp.data;
-            console.log(resp.data);
-            localStorage.setItem("USER_INFOR", JSON.stringify(userTemp));
-            // let tbody = document.getElementById("dropdownId");
-            // tbody.innerHTML = userTemp.fullname;
-            setInforDropDown();
-            setProfile();
-        })
-        .catch(function (e) {
-            console.log(e.resp)
-        });
 };
 
 let updateProfile = function () {
@@ -98,7 +75,7 @@ let updateProfile = function () {
             console.log(response.data);
             if (email === user.email) {
                 loadUserInfor();
-                // setProfile();
+                setProfile();
                 document.getElementById("updateMess").className = "text-success";
                 document.getElementById("updateMess").innerHTML = "Update success !";
             } else {
@@ -183,7 +160,7 @@ let updateAvatar = function () {
             .then(function (response) {
                 console.log(response.data);
                 loadUserInfor();
-                // setProfile();
+                setProfile();
                 document.getElementById("updateAvatarMess").className="text-success";
                 document.getElementById("updateAvatarMess").innerHTML = "Update success !";
             })

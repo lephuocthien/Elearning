@@ -1,17 +1,19 @@
 var user = JSON.parse(localStorage.getItem('USER_INFOR'));
 let token = localStorage.getItem("USER_TOKEN");
-console.log(user);
+// console.log(user);
 if (!user) {
     //Nếu token null hoặc rỗng (chưa đăng nhập)
     window.location.href = "/index.html";
 }
+loadUserInfor();
 let urlParams = new URLSearchParams(window.location.search);
 let courseId = urlParams.get("id");
 
 let testVideo = function (urlVideo) {
     document.getElementById("urlVideo").setAttribute("src", urlVideo);
 }
-axios({
+let loadDetail = function(){
+    axios({
     url: `http://localhost:8087/api/user-course/get-course-by-user-id/${user.id}/${courseId}`,
     method: "GET",
     headers: {
@@ -103,30 +105,7 @@ axios({
                 }
                 // console.log(contentVideo);
                 videoList.innerHTML = contentVideo;
-                // let price = String(course.price).replace(/(.)(?=(\d{3})+$)/g,'$1,');
-                // let promotionPrice = String(course.promotionPrice).replace(/(.)(?=(\d{3})+$)/g,'$1,');
-                // document.getElementById("detailBuy").innerHTML=`
-                // <div class="course-buy">
-                //         <h2 class="mb-4 font-weight-bold">
-                //             ${promotionPrice} đ
-                //             <small>${price} đ</small>
-                //         </h2>
-                //         <button class="btn btn-danger w-100">Add to cart</button>
-                //         <button class="btn btn-outline-secondary w-100">Buy now</button>
-                //         <div class="course-buy-info mt-2">
-                //             <span>This course includes</span>
-                //             <small><i class="fa fa-play-circle-o"></i> 24 hours on-demand video</small>
-                //             <small><i class="fa fa-file-o"></i> 19 articles</small>
-                //             <small><i class="fa fa-code"></i> 19 coding exercises</small>
-                //             <small><i class="fa fa-empire"></i> Full lifetime access</small>
-                //             <small><i class="fa fa-tablet"></i> Access on mobile and TV</small>
-                //             <small><i class="fa fa-recycle"></i> Certificate of Completion</small>
-                //         </div>
-                //         <a class="course-buy-share border-top" href="#">
-                //             <i class="fa fa-share"></i> Share
-                //         </a>
-                //     </div>
-                // `;
+                document.getElementById("detailBuy").innerHTML=``;
             })
             .catch(function (e) {
                 console.log(e.resp)
@@ -140,7 +119,7 @@ axios({
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + token
-            },
+            }
         })
             .then(function (resp) {
                 let course = resp.data;
@@ -225,7 +204,7 @@ axios({
                             <small>${price} đ</small>
                         </h2>
                         <button class="btn btn-danger w-100">Add to cart</button>
-                        <button class="btn btn-outline-secondary w-100">Buy now</button>
+                        <button class="btn btn-outline-secondary w-100" onclick="buy()">Buy now</button>
                         <div class="course-buy-info mt-2">
                             <span>This course includes</span>
                             <small><i class="fa fa-play-circle-o"></i> 24 hours on-demand video</small>
@@ -245,3 +224,30 @@ axios({
                 console.log(e.resp)
             });
     });   
+}
+    let buy = function(){
+        axios({
+            url: "http://localhost:8087/api/user-course/add",
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            data: {
+                courseId: courseId,
+                userId: user.id,
+                roleId: user.roleId
+            }
+
+        })
+            //Xữ lý mã trạng thái bắt đầu bằng số 2
+            .then(function (response) {
+                //Truy xuất đến thẻ body( nơi sẽ chứa giao diện)
+                loadUserInfor();
+                loadDetail();
+            })
+            //Xữ lý mã trạng thái còn lại
+            .catch(function (e) {
+                console.log(e.response)
+            });
+    }
+    loadDetail();

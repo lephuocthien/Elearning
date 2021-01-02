@@ -34,7 +34,7 @@ public interface CourseRepository extends JpaRepository<Course, Integer>{
 			+ "ca.title) "
 			+ "FROM Course c JOIN Category ca "
 			+ "ON c.categoryId = ca.id")
-	List<CourseDto> findAllDtoCourseCategory();
+	List<CourseDto> findAllDtoCourse();
 	
 	@Query("SELECT new com.myclass.dto.CourseDto"
 			+ "(c.id, "
@@ -57,7 +57,27 @@ public interface CourseRepository extends JpaRepository<Course, Integer>{
 			+ "JOIN UserCourse uc "
 			+ "ON c.id = uc.userCourseId.courseId "
 			+ "WHERE uc.userCourseId.userId = :userId")
-	List<CourseDto> findAllDtoCourseCategoryByUserId(@Param("userId") int userId);
+	List<CourseDto> findAllDtoCourseByUserId(@Param("userId") int userId);
+	
+	@Query("SELECT new com.myclass.dto.CourseDto"
+			+ "(c.id, "
+			+ "c.title, "
+			+ "c.image, "
+			+ "c.leturesCount, "
+			+ "c.hourCount, "
+			+ "c.viewCount, "
+			+ "c.price, "
+			+ "c.discount, "
+			+ "c.promotionPrice, "
+			+ "c.description, "
+			+ "c.content, "
+			+ "c.categoryId, "
+			+ "c.lastUpdate, "
+			+ "ca.title) "
+			+ "FROM Course c JOIN Category ca "
+			+ "ON c.categoryId = ca.id "
+			+ "WHERE c.title LIKE :key")
+	List<CourseDto> findAllDtoCourseByTitle(@Param("key") String key);
 	
 	@Query("SELECT new com.myclass.dto.CourseDto"
 			+ "(c.id, "
@@ -78,4 +98,6 @@ public interface CourseRepository extends JpaRepository<Course, Integer>{
 			+ "ON c.categoryId = ca.id "
 			+ "WHERE c.id = :id")
 	CourseDto findDtoCourseById(@Param("id") int id);
+	
+	
 }

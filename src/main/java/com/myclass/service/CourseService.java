@@ -13,6 +13,7 @@ public interface CourseService {
 	List<CourseDto> getAll();
 	List<CourseDto> getAllCourseDto();
 	List<CourseDto> getAllCourseDtoByUserId(int id);
+	List<CourseDto> getAllCourseDtoByTitle(String key);
 	CourseDto getById(int id);
 	CourseDto getDtoById(int id);
 	void save(CourseDto dto);

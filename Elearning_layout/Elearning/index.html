@@ -18,7 +18,7 @@
 <body>
     <header class="container-fluid border-bottom">
         <nav class="navbar navbar-expand-sm navbar-light bg-light">
-            <a class="navbar-brand" href="#">Elearning</a>
+            <a class="navbar-brand" href="/index.html">Elearning</a>
             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
                 data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
                 aria-label="Toggle navigation"></button>
@@ -69,9 +69,12 @@
                         </li>
                         <li class="nav-item w-100">
                             <form class="input-group nav-search">
-                                <input type="text" class="form-control" placeholder="Search courses">
+                                <input type="text" id="key" class="form-control" placeholder="Search courses">
                                 <div class="input-group-append">
-                                    <button class="btn bg-white text-danger"><i class="fa fa-search"></i></button>
+                                    <button class="btn bg-white text-danger" onclick="search()">
+                                        <i class="fa fa-search" >
+
+                                        </i></button>
                                 </div>
                             </form>
                         </li>
@@ -167,6 +170,7 @@
             </div>
         </div>
     </div>
+    <div id="searchContent">
     <!-- BEGIN BANNER -->
     <section class="banner">
         <div class="carousel">
@@ -886,7 +890,7 @@
             </div>
         </div>
     </section>
-
+</div>
     <section class="feedback">
         <div class="container-fluid">
             <h3 class="title mt-3">What our students have to say</h3>
@@ -954,6 +958,8 @@
     <script src="./js/category.js"></script>
     <script src="./js/userInforDropdown.js"></script>
     <script src="./js/coureOfIndex.js"></script>
+    <script src="./js/search.js"></script>
+    
 </body>
 
 </html>
