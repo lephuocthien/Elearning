@@ -3,7 +3,7 @@ let token = localStorage.getItem("USER_TOKEN");
 // console.log(user);
 if (!user) {
     //Nếu token null hoặc rỗng (chưa đăng nhập)
-    window.location.href = "/index.html";
+    window.location.href = "index.html";
 }
 loadUserInfor();
 let urlParams = new URLSearchParams(window.location.search);

@@ -62,7 +62,7 @@ let login = function () {
 let logout = function () {
     localStorage.removeItem('USER_TOKEN');
     localStorage.removeItem('USER_INFOR');
-    window.location.href = "/index.html";
+    window.location.href = "index.html";
 }
 
 let register = function () {
